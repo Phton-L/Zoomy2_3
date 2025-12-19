@@ -16,6 +16,7 @@ class Comminication
         int _bout;
         boolean _seril1Bol;
     public:
+        Comminication();
         void begin(byte start,byte end,int bout,boolean serial1Bol);
 
         void read(int &direktionSend,int &speedSend);
