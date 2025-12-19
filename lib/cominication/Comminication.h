@@ -14,7 +14,7 @@ class Comminication
         byte _start;
         byte _end;
         int _bout;
-        boolean _seril1Bol;
+        boolean _serial1Bol;
     public:
         Comminication();
         void begin(byte start,byte end,int bout,boolean serial1Bol);
