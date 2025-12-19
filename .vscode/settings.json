@@ -1,3 +1,4 @@
 {
-    "chat.agent.enabled": false
+    "chat.agent.enabled": false,
+    "C_Cpp.errorSquiggles": "disabled"
 }
