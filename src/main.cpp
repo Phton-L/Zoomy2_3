@@ -45,8 +45,6 @@ void loop() {
   //Motorregelung
 
   //Randbedingungn prüfend
-  SoomyContoler.stepBarlow(true);
-  SoomyContoler.stepCam(true);
   
   Serial.println("step");
     //if (EndStoppBarlow.getState() || EndStoppMiddel.getState())

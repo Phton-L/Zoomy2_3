@@ -12,7 +12,7 @@ Comminication::Comminication()
 {
 
 }
-Comminication::begin(byte start,byte end,int bout,boolean serial1Bol)
+void Comminication::begin(byte start,byte end,int bout,boolean serial1Bol)
 {
     _serial1Bol = serial1Bol;
     _bout = bout;
@@ -33,22 +33,22 @@ Comminication::begin(byte start,byte end,int bout,boolean serial1Bol)
 
 
 
-Comminication::read()
-{
+void Comminication::read(int &direktionSend,int &speedSend)
+{/*
    if(_serial1Bol)
     {
         if(Serial1.available())
         {
             if( Serial1.readBytes() == _start)
             {
-                byte fistInformazion = Serial1.readBytes();
-                byte secendInformaion = Serial1.readBytes();
-                if ()
+                //byte fistInformazion = Serial1.readBytes();
+                //byte secendInformaion = Serial1.readBytes();
             } 
         }
-    } 
+    }
+        */ 
 }
-Comminication::send()
+void Comminication::send(int direktionSend,int speedSend)
 {
     
 }
