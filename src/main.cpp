@@ -41,14 +41,52 @@ void loop() {
     //Stop -> Target = Real
     //Goto
     //Homing
-  Serial.println("step");
   //Motorregelung
+if (Serial.available() > 0) {
+    // 1. Read the byte into a variable so it can be checked multiple times
+    char command = Serial.read();
 
+    // 2. Check for '1'
+    if (command == '1') {
+      Serial.println("Action 1 triggered");
+      for (size_t i = 0; i < 1000; i++) {
+        
+        StepperCam.step(true);
+        
+      }
+    } 
+    // 3. Check for '2' (Use 'else if' for efficiency)
+    if (command == '2') {
+      Serial.println("Action 2 triggered");
+      for (size_t i = 0; i < 1000; i++) {
+        
+        StepperCam.step(false);
+      }
+    }
+    if (command == '3') {
+      Serial.println("Action 3 triggered");
+      for (size_t i = 0; i < 1000; i++) {
+        
+        StepperBarlow.step(false);
+      }
+    }
+    if (command == '4') {
+      Serial.println("Action 4 triggered");
+      for (size_t i = 0; i < 1000; i++) {
+        
+        StepperBarlow.step(true);
+      }
+    }
+    delay(10);
+    while (Serial.available())
+    {
+      Serial.read();
+    }
+    
   //Randbedingungn prüfend
   
-  Serial.println("step");
     //if (EndStoppBarlow.getState() || EndStoppMiddel.getState())
-  //StepperBarlow.step(true);
-  delay(10);
+  //StepperBarlow.step(true)
   
+}
 }
