@@ -8,6 +8,7 @@
 long motorBarlowPositionReal = 0L;
 long motorBarlowPositionTarget = 0L;
 
+int speedStandart = 100;
 //Motor Prototyp
 MotorStepper StepperCam = MotorStepper();
 MotorStepper StepperBarlow = MotorStepper();
@@ -43,50 +44,79 @@ void loop() {
     //Homing
   //Motorregelung
 if (Serial.available() > 0) {
-    // 1. Read the byte into a variable so it can be checked multiple times
-    char command = Serial.read();
-
-    // 2. Check for '1'
-    if (command == '1') {
-      Serial.println("Action 1 triggered");
-      for (size_t i = 0; i < 1000; i++) {
-        
-        StepperCam.step(true);
-        
+      // 1. Read the byte into a variable so it can be checked multiple times
+      Serial.print("avaibel: ");
+      int command = Serial.read();
+      Serial.println(command);
+      switch (command)
+      {
+        case 97:
+          Serial.println("Action 1 triggered");
+          for (size_t i = 0; i < speedStandart; i++) 
+          {
+            //StepperCam.step(true);
+            SoomyContoler.stepCam(true);           
+          }
+          /* code */
+          break;
+        case 100:
+          Serial.println("Action 2 triggered");
+          for (size_t i = 0; i < speedStandart; i++) 
+          {           
+            SoomyContoler.stepCam(false);
+          }
+          break;
+        case 119:
+          Serial.println("Action 3 triggered");
+          for (size_t i = 0; i < speedStandart; i++) 
+          {            
+            SoomyContoler.stepBarlow(true);          
+          }
+          break;
+        case 115:
+          Serial.println("Action 4 triggered");
+          for (size_t i = 0; i < speedStandart; i++) 
+          {            
+            SoomyContoler.stepBarlow(false);            
+          }
+          break;
+        case 49:
+          Serial.println("Action 1 triggered 3200");
+          speedStandart = 3200; // volle 
+          break;
+        case 50:
+          Serial.println("Action 2 triggered 1600");
+          speedStandart = 3200/2;
+          break;
+        case 51:
+          Serial.println("Action 3 triggered 1066");
+          speedStandart = 3200/3;
+          break;
+        case 52:
+          Serial.println("Action 4 triggered 800");
+          speedStandart = 3200/4;
+          break;
+        case 53:
+          Serial.println("Action 5 triggered 640");
+          speedStandart = 3200/5;
+          break;
+        case 54:
+          Serial.println("Action 6 triggered 533");
+          speedStandart = 3200/6;
+          break;
+        default:
+          
+          break;
       }
-    } 
-    // 3. Check for '2' (Use 'else if' for efficiency)
-    if (command == '2') {
-      Serial.println("Action 2 triggered");
-      for (size_t i = 0; i < 1000; i++) {
-        
-        StepperCam.step(false);
-      }
-    }
-    if (command == '3') {
-      Serial.println("Action 3 triggered");
-      for (size_t i = 0; i < 1000; i++) {
-        
-        StepperBarlow.step(false);
-      }
-    }
-    if (command == '4') {
-      Serial.println("Action 4 triggered");
-      for (size_t i = 0; i < 1000; i++) {
-        
-        StepperBarlow.step(true);
-      }
-    }
-    delay(10);
     while (Serial.available())
-    {
-      Serial.read();
-    }
+          {
+            Serial.read();
+          }
+      
+    //Randbedingungn prüfend
     
-  //Randbedingungn prüfend
-  
-    //if (EndStoppBarlow.getState() || EndStoppMiddel.getState())
-  //StepperBarlow.step(true)
-  
-}
+      //if (EndStoppBarlow.getState() || EndStoppMiddel.getState())
+    //StepperBarlow.step(true)
+    
+  }
 }

@@ -97,9 +97,9 @@ void SoomyMotorContoler::calibracen()
 void SoomyMotorContoler::stepCam(boolean direction)
 {   
     this->controlEndStop();
-    if (direction && this->_camAllowedBackward)
+    if (!direction && this->_camAllowedBackward)
        this->_ptrStepperCam->step(direction);
-    if (!direction && this->_camAllowedForward)
+    if (direction && this->_camAllowedForward)
         this->_ptrStepperCam->step(direction);
 }
 void SoomyMotorContoler::stepBarlow(boolean direction)
@@ -107,7 +107,7 @@ void SoomyMotorContoler::stepBarlow(boolean direction)
     this->controlEndStop();
     if (direction && this->_BarlowAllowedForward)
        this->_ptrStepperBarlow->step(direction);
-    if (!direction && this->_BarlowAllowedForward)
+    if (!direction && this->_BarlowAllowedBackward)
         this->_ptrStepperBarlow->step(direction);
 }
 #endif

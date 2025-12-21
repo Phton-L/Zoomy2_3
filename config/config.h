@@ -15,4 +15,5 @@ date: 26.10.2025
 #define endStopPullup true
 #define endStopInvert true
 
+
 #endif
