@@ -3,7 +3,7 @@
 #include "../pins/pinsMain.h"
 #include "../lib/actors/MotorStepper.h"
 #include "../lib/sensor/Endstop.h"
-#include "../lib/SoomyMotorContoler.h"
+#include "../lib/zoomyMotorContoler.h"
 
 long motorBarlowPositionReal = 0L;
 long motorBarlowPositionTarget = 0L;
