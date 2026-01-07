@@ -10,6 +10,7 @@ date: 26.10.2025
 #include "actors/MotorStepper.h"
 #include "sensor/Endstop.h"
 
+
 class SoomyMotorContoler
 {
     private:
@@ -29,6 +30,7 @@ class SoomyMotorContoler
 
         boolean _camDirection;
         boolean _barlowDirection;
+        int _currentSpeed;
     public:
     
     public:
@@ -53,9 +55,9 @@ class SoomyMotorContoler
 
         void calibracen();
 
-        void stepCam(boolean direction);
+        void stepCam(boolean direction,int speed);
 
-        void stepBarlow(boolean direction);
+        void stepBarlow(boolean direction,int speed);
 
 };
 #endif

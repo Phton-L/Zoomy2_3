@@ -121,4 +121,5 @@ if (Serial.available() > 0) {
   }
 }
 // formel füs Summen
-// L1=(53.8((l+2)/4.8))-62.2 die angeben in mm stimmt glaube nicht
+// L1=(53.8(somm faktor)-62.2 die angeben in mm stimmt glaube nicht
+//  L = 4,8 *Soomfaktor  -2

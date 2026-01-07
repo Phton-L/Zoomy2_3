@@ -9,6 +9,7 @@ date: 26.10.2025
 #include <Arduino.h>
 #include "../../lib/actors/MotorStepper.h"
 #include "../../config/config.h"
+#include <time.h>
 
 MotorStepper::MotorStepper()
 {
@@ -29,6 +30,7 @@ void MotorStepper::begin(
     this->_pinStp = pinStp;
     this->_pinDir = pinDir;
     this->_direction = direction;
+    this->lastTime = millis();
 
     //initialise Ports
     pinMode(this->_pinEna, OUTPUT);
@@ -53,13 +55,17 @@ unsigned long MotorStepper::getPosition()
 }
 
 //Usage
-void MotorStepper::step(boolean direction)
+void MotorStepper::step(boolean direction,int speed)
 {
     digitalWrite(this->_pinDir, (this->_direction == direction)); // bei true nach ausen fahren bei false in die mitte
+    while (millis()<lastTime + speed)
+    {
+        delayMicroseconds(1);
+    }
     digitalWrite(this->_pinStp, HIGH);
-    delayMicroseconds(motorStepperStepDelayMicroSecons);
+    delayMicroseconds(speed);
     digitalWrite(this->_pinStp, LOW);
-    delayMicroseconds(motorStepperStepDelayMicroSecons);
+    this->lastTime = millis();
     if(direction)
         this->_position++;
     else

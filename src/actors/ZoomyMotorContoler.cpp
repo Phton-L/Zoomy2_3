@@ -9,6 +9,7 @@ date: 26.10.2025
 #include <Arduino.h>
 #include "../../lib/SoomyMotorContoler.h"
 #include "../config/config.h"
+#include <time.h>
 
 
 SoomyMotorContoler::SoomyMotorContoler()
@@ -21,6 +22,7 @@ SoomyMotorContoler::SoomyMotorContoler()
 
     this->_camDirection = true;
     this->_barlowDirection = true;
+    this->_currentSpeed = 0;
 }
 
 void SoomyMotorContoler::begin(
@@ -94,7 +96,39 @@ void SoomyMotorContoler::calibracen()
     this->_ptrStepperBarlow->setPosition(0);
     this->_ptrStepperCam->setPosition(0);
 }
-void SoomyMotorContoler::stepCam(boolean direction)
+void SoomyMotorContoler::stepCam(boolean direction,int speed)
+{   
+    this->controlEndStop();
+    if (!direction && this->_camAllowedBackward)
+    if (speed < motorStepperStepDelayMicroSecons)
+        speed = motorStepperStepDelayMicroSecons;
+        if (speed > this->_currentSpeed)
+    {
+        int targetSpeed = speed;
+        speed = this->_currentSpeed +((targetSpeed-this->_currentSpeed) * ControlerMotorMultiplikisenfaktor);
+       this->_ptrStepperCam->step(direction,speed);
+       this->_currentSpeed  = speed;
+    }
+    if (speed < this->_currentSpeed)
+    {
+        int targetSpeed = speed;
+        speed = this->_currentSpeed -((this->_currentSpeed-targetSpeed) * ControlerMotorMultiplikisenfaktor);
+       this->_ptrStepperCam->step(direction,speed);
+       this->_currentSpeed  = speed;
+    }
+    if (direction && this->_camAllowedForward)
+        this->_ptrStepperCam->step(direction,speed);
+}
+void SoomyMotorContoler::stepBarlow(boolean direction,int speed)
+{   
+    this->controlEndStop();
+    if (direction && this->_BarlowAllowedForward)
+       this->_ptrStepperBarlow->step(direction,speed);
+    if (!direction && this->_BarlowAllowedBackward)
+        this->_ptrStepperBarlow->step(direction,speed);
+}
+/*
+void SoomyMotorContoler::stepCam(boolean direction,int speed)
 {   
     this->controlEndStop();
     if (!direction && this->_camAllowedBackward)
@@ -102,7 +136,7 @@ void SoomyMotorContoler::stepCam(boolean direction)
     if (direction && this->_camAllowedForward)
         this->_ptrStepperCam->step(direction);
 }
-void SoomyMotorContoler::stepBarlow(boolean direction)
+void SoomyMotorContoler::stepBarlow(boolean direction,int speed)
 {   
     this->controlEndStop();
     if (direction && this->_BarlowAllowedForward)
@@ -110,4 +144,5 @@ void SoomyMotorContoler::stepBarlow(boolean direction)
     if (!direction && this->_BarlowAllowedBackward)
         this->_ptrStepperBarlow->step(direction);
 }
+*/
 #endif

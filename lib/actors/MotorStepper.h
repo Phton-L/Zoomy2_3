@@ -15,7 +15,7 @@ private:
     byte _pinEna;
     byte _pinStp;
     byte _pinDir;
-
+    long lastTime;
     //Direction
     boolean _direction;
 
