@@ -59,5 +59,7 @@ class SoomyMotorContoler
 
         void stepBarlow(boolean direction,int speed);
 
+        int curentSpeedReturn()
+
 };
 #endif

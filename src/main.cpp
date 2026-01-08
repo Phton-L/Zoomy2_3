@@ -9,6 +9,7 @@ long motorBarlowPositionReal = 0L;
 long motorBarlowPositionTarget = 0L;
 
 int speedStandart = 100;
+int lastInput = 0;
 //Motor Prototyp
 MotorStepper StepperCam = MotorStepper();
 MotorStepper StepperBarlow = MotorStepper();
@@ -33,6 +34,7 @@ void setup() {
   SoomyContoler.begin(motorCamDirection,motorBarlowDirection,&EndStoppMiddle,&EndStoppCam,&EndStoppBarlow,&StepperCam, &StepperBarlow);
   Serial.println("calibracen");
   SoomyContoler.calibracen();
+  
 }
 
 void loop() {
@@ -55,29 +57,27 @@ if (Serial.available() > 0) {
           for (size_t i = 0; i < speedStandart; i++) 
           {
             //StepperCam.step(true);
-            SoomyContoler.stepCam(true);           
+            SoomyContoler.stepCam(true,motorStepperStepDelayMicroSecons);           
           }
           /* code */
           break;
-        case 100:
-          Serial.println("Action 2 triggered");
-          for (size_t i = 0; i < speedStandart; i++) 
-          {           
-            SoomyContoler.stepCam(false);
-          }
+        case 100:           
+            SoomyContoler.stepCam(false,motorStepperStepDelayMicroSecons);
+            lastInput = 100;
+
           break;
         case 119:
           Serial.println("Action 3 triggered");
           for (size_t i = 0; i < speedStandart; i++) 
           {            
-            SoomyContoler.stepBarlow(true);          
+            SoomyContoler.stepBarlow(true,motorStepperStepDelayMicroSecons);          
           }
           break;
         case 115:
           Serial.println("Action 4 triggered");
           for (size_t i = 0; i < speedStandart; i++) 
           {            
-            SoomyContoler.stepBarlow(false);            
+            SoomyContoler.stepBarlow(false,motorStepperStepDelayMicroSecons);            
           }
           break;
         case 49:
@@ -105,7 +105,18 @@ if (Serial.available() > 0) {
           speedStandart = 3200/6;
           break;
         default:
+          switch (lastInput)
+          {
+          case 100:
+            while (SoomyContoler.curentSpeedReturn > 0)
+            {
+              SoomyContoler.stepCam(false,0);
+            }
+            break;
           
+          default:
+            break;
+          }
           break;
       }
     while (Serial.available())

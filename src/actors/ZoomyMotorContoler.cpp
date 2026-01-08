@@ -100,9 +100,10 @@ void SoomyMotorContoler::stepCam(boolean direction,int speed)
 {   
     this->controlEndStop();
     if (!direction && this->_camAllowedBackward)
+    {
     if (speed < motorStepperStepDelayMicroSecons)
         speed = motorStepperStepDelayMicroSecons;
-        if (speed > this->_currentSpeed)
+    if (speed > this->_currentSpeed)
     {
         int targetSpeed = speed;
         speed = this->_currentSpeed +((targetSpeed-this->_currentSpeed) * ControlerMotorMultiplikisenfaktor);
@@ -116,6 +117,14 @@ void SoomyMotorContoler::stepCam(boolean direction,int speed)
        this->_ptrStepperCam->step(direction,speed);
        this->_currentSpeed  = speed;
     }
+    if (speed == this->_currentSpeed)
+    {
+        this->_ptrStepperCam->step(direction,speed);
+        this->_currentSpeed  = speed;
+
+    }
+
+    }
     if (direction && this->_camAllowedForward)
         this->_ptrStepperCam->step(direction,speed);
 }
@@ -126,6 +135,10 @@ void SoomyMotorContoler::stepBarlow(boolean direction,int speed)
        this->_ptrStepperBarlow->step(direction,speed);
     if (!direction && this->_BarlowAllowedBackward)
         this->_ptrStepperBarlow->step(direction,speed);
+}
+int SoomyMotorControler::curentSpeedReturn()
+{
+    return this->_currentSpeed;
 }
 /*
 void SoomyMotorContoler::stepCam(boolean direction,int speed)
@@ -145,4 +158,5 @@ void SoomyMotorContoler::stepBarlow(boolean direction,int speed)
         this->_ptrStepperBarlow->step(direction);
 }
 */
+
 #endif
