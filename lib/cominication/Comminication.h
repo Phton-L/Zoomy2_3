@@ -22,9 +22,9 @@ class Comminication
 
         void begin(byte start,byte end,int bout,bool serial1Bol);
 
-        void read(int &direktionSend,int &speedSend);
+        void read(int &directionSend,int &speedSend);
 
-        void send(int direktionSend,int speedSend);
+        void send(int directionSend,int speedSend);
 
 
 };

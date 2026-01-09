@@ -33,7 +33,7 @@ void Comminication::begin(byte start,byte end,int bout,boolean serial1Bol)
 
 
 
-void Comminication::read(int &direktionSend,int &speedSend)
+void Comminication::read(int &directionSend,int &speedSend)
 {/*
    if(_serial1Bol)
     {
@@ -48,7 +48,7 @@ void Comminication::read(int &direktionSend,int &speedSend)
     }
         */ 
 }
-void Comminication::send(int direktionSend,int speedSend)
+void Comminication::send(int directionSend,int speedSend)
 {
     
 }

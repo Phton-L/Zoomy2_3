@@ -7,13 +7,13 @@ date: 01.11.2025
 #define CONTROLER_CPP
 
 #include <Arduino.h>
-#include "../../lib/controler/Controler.h"
+#include "../../lib/controler/Controller.h"
 
 
-Controler::Controler()
+Controller::Controller()
 {
 }
-void Controler::begin(MotorStepper* controllerMotor,
+void Controller::begin(MotorStepper* controllerMotor,
                 Endstop* controllerEndSopEnd,
                 Endstop* controllerEndStopMiddel,
                 int controllerMultiplicatorSteps
@@ -24,7 +24,7 @@ void Controler::begin(MotorStepper* controllerMotor,
     this->_controllerEndStopMiddel = controllerEndStopMiddel;
     _controllerMultiplicatorSteps = controllerMultiplicatorSteps;
 }
-long Controler::getDistanceMM()
+long Controller::getDistanceMM()
 {
     _distanceMM = this->_controllerMotor->getPosition()*_controllerMultiplicatorSteps;
     return _distanceMM;

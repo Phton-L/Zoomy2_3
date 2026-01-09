@@ -8,13 +8,13 @@ date: 01.11.2025
 
 #include <Arduino.h>
 #include "../../lib/actors/MotorStepper.h"
-#include "../../lib/sensor/Endstop.h"
-class Controler
+#include "../../lib/sensor/EndStop.h"
+class Controller
 {
     private:
         MotorStepper* _controllerMotor;
-        Endstop* _controllerEndSopEnd;
-        Endstop* _controllerEndStopMiddel;
+        EndStop* _controllerEndSopEnd;
+        EndStop* _controllerEndStopMiddel;
 
         int _controllerMultiplicatorSteps;
 
@@ -22,7 +22,7 @@ class Controler
 
     public:
 
-    Controler();
+    Controller();
 
     void begin(MotorStepper* controllerMotor,
                 Endstop* controllerEndSopEnd,

@@ -3,21 +3,21 @@ created by: Vinzent Schillinger
 date: 26.10.2025
 */
 
-#ifndef SOOMY_MOTOR_CONTOLER_H
-#define SOOMY_MOTOR_CONTOLER_H
+#ifndef SOOMY_MOTOR_CONTOLLER_H
+#define SOOMY_MOTOR_CONTOLLER_H
 
 #include <Arduino.h>
 #include "actors/MotorStepper.h"
-#include "sensor/Endstop.h"
+#include "sensor/EndStop.h"
 
 
-class SoomyMotorContoler
+class SoomyMotorContoller
 {
     private:
 
-        Endstop* _ptrEndstopEndStopMiddel;
-        Endstop* _ptrEndstopEndStopCam;
-        Endstop* _ptrEndstopEndStopBarlow;
+        EndStop* _ptrEndStopMiddel;
+        EndStop* _ptrEndStopCam;
+        EndStop* _ptrEndStopBarlow;
 
         MotorStepper* _ptrStepperCam;
         MotorStepper* _ptrStepperBarlow;
@@ -34,32 +34,26 @@ class SoomyMotorContoler
     public:
     
     public:
-        SoomyMotorContoler();
+        SoomyMotorContoller();
         void begin(
             boolean camDirection, 
             boolean barlowDirection, 
-            Endstop* ptrEndstopEndStopMiddel,
-            Endstop* ptrEndstopEndStopCam,
-            Endstop* ptrEndstopEndStopBar,
+            EndStop* ptrEndStopMiddel,
+            EndStop* ptrEndStopCam,
+            EndStop* ptrEndStopBar,
             MotorStepper* ptrStepperCam,
             MotorStepper* ptrStepperBarlow
             );
 
-        boolean controlEndStop(); // only Endstops
+        boolean controlEndStop(); // only EndStops
 
-        void camDrive(
-                int camDriveSpeed, 
-                byte camDriveSteppes, 
-                boolean camDriveDirection
-                );
-
-        void calibracen();
+        void calibration();
 
         void stepCam(boolean direction,int speed);
 
         void stepBarlow(boolean direction,int speed);
 
-        int curentSpeedReturn()
+        int currentSpeedReturn()
 
 };
 #endif

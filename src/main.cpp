@@ -2,8 +2,8 @@
 #include "../config/config.h"
 #include "../pins/pinsMain.h"
 #include "../lib/actors/MotorStepper.h"
-#include "../lib/sensor/Endstop.h"
-#include "../lib/zoomyMotorContoler.h"
+#include "../lib/sensor/EndStop.h"
+#include "../lib/zoomyMotorContoller.h"
 
 long motorBarlowPositionReal = 0L;
 long motorBarlowPositionTarget = 0L;
@@ -16,11 +16,11 @@ MotorStepper StepperBarlow = MotorStepper();
 
 
 // EndStop
-Endstop EndStoppCam = Endstop();
-Endstop EndStoppBarlow = Endstop();
-Endstop EndStoppMiddle = Endstop();
+EndStop EndStoppCam = Endstop();
+EndStop EndStoppBarlow = Endstop();
+EndStop EndStoppMiddle = Endstop();
 //
-SoomyMotorContoler SoomyContoler = SoomyMotorContoler();
+SoomyMotorContoller SoomyContoller = SoomyMotorContoller();
 
 void setup() {
   Serial.begin(9600);
@@ -31,14 +31,14 @@ void setup() {
   EndStoppCam.begin(pinEndStopCam, endStopInvert, endStopPullup);
   EndStoppMiddle.begin(pinEndStopMiddel, endStopInvert, endStopPullup);
 
-  SoomyContoler.begin(motorCamDirection,motorBarlowDirection,&EndStoppMiddle,&EndStoppCam,&EndStoppBarlow,&StepperCam, &StepperBarlow);
+  SoomyContoller.begin(motorCamDirection,motorBarlowDirection,&EndStoppMiddle,&EndStoppCam,&EndStoppBarlow,&StepperCam, &StepperBarlow);
   Serial.println("calibracen");
-  SoomyContoler.calibracen();
+  SoomyContoller.calibration();
   
 }
 
 void loop() {
-  //Communikation
+  //Communication
     //Erhöhe Target
     //Verringere Target
     //Stop -> Target = Real
@@ -47,7 +47,7 @@ void loop() {
   //Motorregelung
 if (Serial.available() > 0) {
       // 1. Read the byte into a variable so it can be checked multiple times
-      Serial.print("avaibel: ");
+      Serial.print("availbel: ");
       int command = Serial.read();
       Serial.println(command);
       switch (command)
@@ -57,12 +57,12 @@ if (Serial.available() > 0) {
           for (size_t i = 0; i < speedStandart; i++) 
           {
             //StepperCam.step(true);
-            SoomyContoler.stepCam(true,motorStepperStepDelayMicroSecons);           
+            SoomyController.stepCam(true,motorStepperStepDelayMicroSecons);           
           }
           /* code */
           break;
         case 100:           
-            SoomyContoler.stepCam(false,motorStepperStepDelayMicroSecons);
+            SoomyController.stepCam(false,motorStepperStepDelayMicroSecons);
             lastInput = 100;
 
           break;
@@ -70,14 +70,14 @@ if (Serial.available() > 0) {
           Serial.println("Action 3 triggered");
           for (size_t i = 0; i < speedStandart; i++) 
           {            
-            SoomyContoler.stepBarlow(true,motorStepperStepDelayMicroSecons);          
+            SoomyController.stepBarlow(true,motorStepperStepDelayMicroSecons);          
           }
           break;
         case 115:
           Serial.println("Action 4 triggered");
           for (size_t i = 0; i < speedStandart; i++) 
           {            
-            SoomyContoler.stepBarlow(false,motorStepperStepDelayMicroSecons);            
+            SoomyController.stepBarlow(false,motorStepperStepDelayMicroSecons);            
           }
           break;
         case 49:
@@ -108,9 +108,9 @@ if (Serial.available() > 0) {
           switch (lastInput)
           {
           case 100:
-            while (SoomyContoler.curentSpeedReturn > 0)
+            while (SoomyController.currentSpeedReturn() > 0)
             {
-              SoomyContoler.stepCam(false,0);
+              SoomyController.stepCam(false,0);
             }
             break;
           
@@ -131,6 +131,6 @@ if (Serial.available() > 0) {
     
   }
 }
-// formel füs Summen
-// L1=(53.8(somm faktor)-62.2 die angeben in mm stimmt glaube nicht
+// formel
+// L1=(53.8(soom faktor)-62.2 die angeben in mm stimmt glaube nicht
 //  L = 4,8 *Soomfaktor  -2

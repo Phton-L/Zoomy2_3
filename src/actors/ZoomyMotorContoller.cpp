@@ -3,16 +3,16 @@ created by: Vinzent Schillinger
 date: 26.10.2025
 */
 
-#ifndef SOOMY_MOTOR_CONTOLER_CPP    
-#define SOOMY_MOTOR_CONTOLER_CPP
+#ifndef SOOMY_MOTOR_CONTOLLER_CPP    
+#define SOOMY_MOTOR_CONTOLLER_CPP
 
 #include <Arduino.h>
-#include "../../lib/SoomyMotorContoler.h"
+#include "../../lib/SoomyMotorContoller.h"
 #include "../config/config.h"
 #include <time.h>
 
 
-SoomyMotorContoler::SoomyMotorContoler()
+SoomyMotorContoller::SoomyMotorContoller()
 {
     this->_BarlowAllowedBackward = false;
     this->_BarlowAllowedForward = false;
@@ -25,34 +25,34 @@ SoomyMotorContoler::SoomyMotorContoler()
     this->_currentSpeed = 0;
 }
 
-void SoomyMotorContoler::begin(
+void SoomyMotorContoller::begin(
             boolean camDirection, 
             boolean barlowDirection, 
-            Endstop* ptrEndstopEndStopMiddel,
-            Endstop* ptrEndstopEndStopCam,
-            Endstop* ptrEndstopEndStopBarlow,
+            EndStop* ptrEndStopMiddel,
+            EndStop* ptrEndStopCam,
+            EndStop* ptrEndStopBarlow,
             MotorStepper* ptrStepperCam,
             MotorStepper* ptrStepperBarlow
             )
 {
     this->_barlowDirection = barlowDirection;
     this->_camDirection = camDirection;
-    this->_ptrEndstopEndStopBarlow = ptrEndstopEndStopBarlow;
-    this->_ptrEndstopEndStopCam = ptrEndstopEndStopCam;
-    this->_ptrEndstopEndStopMiddel = ptrEndstopEndStopMiddel;
+    this->_ptrEndStopBarlow = ptrEndStopBarlow;
+    this->_ptrEndStopCam = ptrEndStopCam;
+    this->_ptrEndStopMiddel = ptrEndStopMiddel;
 
     this->_ptrStepperBarlow = ptrStepperBarlow;
     this->_ptrStepperCam = ptrStepperCam;
     Serial.begin(9600);
 }
-boolean SoomyMotorContoler::controlEndStop()
+boolean SoomyMotorContoller::controlEndStop()
 {
-    this-> _BarlowAllowedBackward = !this->_ptrEndstopEndStopBarlow->getState();
+    this-> _BarlowAllowedBackward = !this->_ptrEndStopBarlow->getState();
 
-    this-> _camAllowedBackward = !this-> _ptrEndstopEndStopCam->getState();
+    this-> _camAllowedBackward = !this-> _ptrEndStopCam->getState();
 
-    this-> _camAllowedForward = !this-> _ptrEndstopEndStopMiddel->getState();
-    this-> _BarlowAllowedForward = !this-> _ptrEndstopEndStopMiddel->getState(); // false wen in die richtung gefahren werden darf
+    this-> _camAllowedForward = !this-> _ptrEndStopMiddel->getState();
+    this-> _BarlowAllowedForward = !this-> _ptrEndStopMiddel->getState(); // false wen in die richtung gefahren werden darf
 
     if (!this->_camAllowedBackward || !this->_camAllowedForward ||
         !this->_BarlowAllowedBackward || !this->_BarlowAllowedForward
@@ -61,33 +61,33 @@ boolean SoomyMotorContoler::controlEndStop()
     else
         return true;        
 }
-void SoomyMotorContoler::calibracen()
+void SoomyMotorContoller::calibration()
 {
-    while (!this->_ptrEndstopEndStopBarlow->getState() || !this->_ptrEndstopEndStopCam->getState())
+    while (!this->_ptrEndStopBarlow->getState() || !this->_ptrEndStopCam->getState())
     {
-        Serial.print(!this->_ptrEndstopEndStopBarlow->getState());
-        Serial.println("EndstopBarlow");
-        while (!this->_ptrEndstopEndStopBarlow->getState())
+        Serial.print(!this->_ptrEndStopBarlow->getState());
+        Serial.println("EndStopBarlow");
+        while (!this->_ptrEndStopBarlow->getState())
             this->_ptrStepperBarlow->step(false); // bei true nach ausen fahren
-        while(!this->_ptrEndstopEndStopCam->getState())
+        while(!this->_ptrEndStopCam->getState())
             this->_ptrStepperCam->step(false);
     }
-    while (this->_ptrEndstopEndStopBarlow->getState() || this->_ptrEndstopEndStopCam->getState())
+    while (this->_ptrEndStopBarlow->getState() || this->_ptrEndStopCam->getState())
     {   
-        while (this->_ptrEndstopEndStopBarlow->getState())
+        while (this->_ptrEndStopBarlow->getState())
             this->_ptrStepperBarlow->step(true); // bei false in die mitte fahren
-        while (this->_ptrEndstopEndStopCam->getState())
+        while (this->_ptrEndStopCam->getState())
             this->_ptrStepperCam->step(true);
     }
-    while (!this->_ptrEndstopEndStopBarlow->getState() || !this->_ptrEndstopEndStopCam->getState())
+    while (!this->_ptrEndStopBarlow->getState() || !this->_ptrEndStopCam->getState())
     {
-        while (!this->_ptrEndstopEndStopBarlow->getState())
+        while (!this->_ptrEndStopBarlow->getState())
         {
             delayMicroseconds(motorStepperStepDelayMicroSecons);
             this->_ptrStepperBarlow->step(false); // bei true nach ausen fahren
         }
         
-        while (!this->_ptrEndstopEndStopCam->getState())
+        while (!this->_ptrEndStopCam->getState())
         {
             delayMicroseconds(motorStepperStepDelayMicroSecons);
             this->_ptrStepperCam->step(false);
@@ -96,7 +96,7 @@ void SoomyMotorContoler::calibracen()
     this->_ptrStepperBarlow->setPosition(0);
     this->_ptrStepperCam->setPosition(0);
 }
-void SoomyMotorContoler::stepCam(boolean direction,int speed)
+void SoomyMotorContoller::stepCam(boolean direction,int speed)
 {   
     this->controlEndStop();
     if (!direction && this->_camAllowedBackward)
@@ -128,7 +128,7 @@ void SoomyMotorContoler::stepCam(boolean direction,int speed)
     if (direction && this->_camAllowedForward)
         this->_ptrStepperCam->step(direction,speed);
 }
-void SoomyMotorContoler::stepBarlow(boolean direction,int speed)
+void SoomyMotorContoller::stepBarlow(boolean direction,int speed)
 {   
     this->controlEndStop();
     if (direction && this->_BarlowAllowedForward)
@@ -136,12 +136,12 @@ void SoomyMotorContoler::stepBarlow(boolean direction,int speed)
     if (!direction && this->_BarlowAllowedBackward)
         this->_ptrStepperBarlow->step(direction,speed);
 }
-int SoomyMotorControler::curentSpeedReturn()
+int SoomyMotorControler::currentSpeedReturn()
 {
     return this->_currentSpeed;
 }
 /*
-void SoomyMotorContoler::stepCam(boolean direction,int speed)
+void SoomyMotorContoller::stepCam(boolean direction,int speed)
 {   
     this->controlEndStop();
     if (!direction && this->_camAllowedBackward)
@@ -149,7 +149,7 @@ void SoomyMotorContoler::stepCam(boolean direction,int speed)
     if (direction && this->_camAllowedForward)
         this->_ptrStepperCam->step(direction);
 }
-void SoomyMotorContoler::stepBarlow(boolean direction,int speed)
+void SoomyMotorContoller::stepBarlow(boolean direction,int speed)
 {   
     this->controlEndStop();
     if (direction && this->_BarlowAllowedForward)

@@ -6,7 +6,7 @@ date: 26.10.2025
 #ifndef PINS_REMOTE_CONTROL_H
 #define PINS_REMOTE_CONTROL_H
 
-// cam ClockWise and CounterCockWise
+// cam ClockWise and CounterClockWise
 #define pinButtonCamClockWise 3
 #define pinButtonCamCounterClockWise 2
 

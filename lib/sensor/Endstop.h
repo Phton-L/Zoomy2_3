@@ -1,5 +1,5 @@
 /*
-created by: Markus Kohler
+created by: Vinzent Schillinger
 date: 12.03.2024
 */
 
@@ -11,15 +11,15 @@ Include nessecary libraries
 */
 #include <Arduino.h>
 
-class Endstop
+class EndStop
 {
 private:
     byte _pin;
     boolean _invert;
 
 public:
-    Endstop();
-    void begin(byte pin, boolean invert, boolean pullup);
+    EndStop();
+    void begin(byte pin, boolean invert, boolean pullUp);
     boolean getState();
 };
 

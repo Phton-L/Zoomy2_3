@@ -3,20 +3,20 @@ created by: Markus Kohler
 date: 12.033.2024
 */
 
-#ifndef ENDSTOP_CPP
-#define ENDSTOP_CPP
+#ifndef END_STOP_CPP
+#define END_STOP_CPP
 
 #include <Arduino.h>
 #include "../../config/config.h"
-#include "../../lib/sensor/Endstop.h"
+#include "../../lib/sensor/EndStop.h"
 
-Endstop::Endstop()
+EndStop::EndStop()
 {
     this->_pin = 0;
     this->_invert = false;
 }
 
-void Endstop::begin(byte pin, boolean invert, boolean pullup)
+void EndStop::begin(byte pin, boolean invert, boolean pullUp)
 {
     this->_pin = pin;
     this->_invert = invert;
@@ -31,7 +31,7 @@ void Endstop::begin(byte pin, boolean invert, boolean pullup)
     }
 }
 
-boolean Endstop::getState()
+boolean EndStop::getState()
 {
     if(this->_invert)
     {
