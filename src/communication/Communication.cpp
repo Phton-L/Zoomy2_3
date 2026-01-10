@@ -8,11 +8,11 @@ date: 19.12.2015
 
 #include "../../lib/cominication/Communication.h"
 
-Comminication::Comminication()
+Communication::Communication()
 {
 
 }
-void Comminication::begin(byte start,byte end,int bout,boolean serial1Bol)
+void Communication::begin(byte start,byte end,int bout,boolean serial1Bol)
 {
     _serial1Bol = serial1Bol;
     _bout = bout;
@@ -33,7 +33,7 @@ void Comminication::begin(byte start,byte end,int bout,boolean serial1Bol)
 
 
 
-void Comminication::read(int &directionSend,int &speedSend)
+void Communication::read(int &directionSend,int &speedSend)
 {/*
    if(_serial1Bol)
     {
@@ -48,7 +48,7 @@ void Comminication::read(int &directionSend,int &speedSend)
     }
         */ 
 }
-void Comminication::send(int directionSend,int speedSend)
+void Communication::send(int directionSend,int speedSend)
 {
     
 }

@@ -3,16 +3,16 @@ created by: Vinzent Schillinger
 date: 26.10.2025
 */
 
-#ifndef SOOMY_MOTOR_CONTOLLER_CPP    
-#define SOOMY_MOTOR_CONTOLLER_CPP
+#ifndef Zoomy_MOTOR_CONTOLLER_CPP    
+#define Zoomy_MOTOR_CONTOLLER_CPP
 
 #include <Arduino.h>
-#include "../../lib/SoomyMotorContoller.h"
+#include "../../lib/ZoomyMotorContoller.h"
 #include "../config/config.h"
 #include <time.h>
 
 
-SoomyMotorContoller::SoomyMotorContoller()
+ZoomyMotorContoller::ZoomyMotorContoller()
 {
     this->_BarlowAllowedBackward = false;
     this->_BarlowAllowedForward = false;
@@ -25,7 +25,7 @@ SoomyMotorContoller::SoomyMotorContoller()
     this->_currentSpeed = 0;
 }
 
-void SoomyMotorContoller::begin(
+void ZoomyMotorContoller::begin(
             boolean camDirection, 
             boolean barlowDirection, 
             EndStop* ptrEndStopMiddel,
@@ -45,7 +45,7 @@ void SoomyMotorContoller::begin(
     this->_ptrStepperCam = ptrStepperCam;
     Serial.begin(9600);
 }
-boolean SoomyMotorContoller::controlEndStop()
+boolean ZoomyMotorContoller::controlEndStop()
 {
     this-> _BarlowAllowedBackward = !this->_ptrEndStopBarlow->getState();
 
@@ -61,7 +61,7 @@ boolean SoomyMotorContoller::controlEndStop()
     else
         return true;        
 }
-void SoomyMotorContoller::calibration()
+void ZoomyMotorContoller::calibration()
 {
     while (!this->_ptrEndStopBarlow->getState() || !this->_ptrEndStopCam->getState())
     {
@@ -96,7 +96,7 @@ void SoomyMotorContoller::calibration()
     this->_ptrStepperBarlow->setPosition(0);
     this->_ptrStepperCam->setPosition(0);
 }
-void SoomyMotorContoller::stepCam(boolean direction,int speed)
+void ZoomyMotorContoller::stepCam(boolean direction,int speed)
 {   
     this->controlEndStop();
     if (!direction && this->_camAllowedBackward)
@@ -128,7 +128,7 @@ void SoomyMotorContoller::stepCam(boolean direction,int speed)
     if (direction && this->_camAllowedForward)
         this->_ptrStepperCam->step(direction,speed);
 }
-void SoomyMotorContoller::stepBarlow(boolean direction,int speed)
+void ZoomyMotorContoller::stepBarlow(boolean direction,int speed)
 {   
     this->controlEndStop();
     if (direction && this->_BarlowAllowedForward)
@@ -136,12 +136,12 @@ void SoomyMotorContoller::stepBarlow(boolean direction,int speed)
     if (!direction && this->_BarlowAllowedBackward)
         this->_ptrStepperBarlow->step(direction,speed);
 }
-int SoomyMotorControler::currentSpeedReturn()
+int ZoomyMotorControler::currentSpeedReturn()
 {
     return this->_currentSpeed;
 }
 /*
-void SoomyMotorContoller::stepCam(boolean direction,int speed)
+void ZoomyMotorContoller::stepCam(boolean direction,int speed)
 {   
     this->controlEndStop();
     if (!direction && this->_camAllowedBackward)
@@ -149,7 +149,7 @@ void SoomyMotorContoller::stepCam(boolean direction,int speed)
     if (direction && this->_camAllowedForward)
         this->_ptrStepperCam->step(direction);
 }
-void SoomyMotorContoller::stepBarlow(boolean direction,int speed)
+void ZoomyMotorContoller::stepBarlow(boolean direction,int speed)
 {   
     this->controlEndStop();
     if (direction && this->_BarlowAllowedForward)

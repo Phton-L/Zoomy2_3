@@ -8,7 +8,7 @@ date: 17.12.2025
 
 #include <Arduino.h>
 
-class Comminication
+class Communication
 {
     private:
         byte _start;
@@ -18,7 +18,7 @@ class Comminication
     public:
 
     public:
-        Comminication();
+        Communication();
 
         void begin(byte start,byte end,int bout,bool serial1Bol);
 
