@@ -25,8 +25,8 @@ class Controller
     Controller();
 
     void begin(MotorStepper* controllerMotor,
-                Endstop* controllerEndSopEnd,
-                Endstop* controllerEndStopMiddel,
+                EndStop* controllerEndSopEnd,
+                EndStop* controllerEndStopMiddel,
                 int controllerMultiplicatorSteps
                 );
     

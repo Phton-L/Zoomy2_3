@@ -14,8 +14,8 @@ Controller::Controller()
 {
 }
 void Controller::begin(MotorStepper* controllerMotor,
-                Endstop* controllerEndSopEnd,
-                Endstop* controllerEndStopMiddel,
+                EndStop* controllerEndSopEnd,
+                EndStop* controllerEndStopMiddel,
                 int controllerMultiplicatorSteps
                 )
 {
