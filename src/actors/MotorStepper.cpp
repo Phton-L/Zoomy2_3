@@ -66,9 +66,13 @@ void MotorStepper::step(boolean direction,int speed)
     digitalWrite(this->_pinStp, LOW);
     this->lastTime = millis();
     if(direction)
+    {
         this->_position++;
+    }
     else
+    {
         this->_position--;
+    }
 }
 
 #endif

@@ -9,7 +9,6 @@ date: 26.10.2025
 #include <Arduino.h>
 #include "../../lib/ZoomyMotorContoller.h"
 #include "../config/config.h"
-#include <time.h>
 
 
 ZoomyMotorContoller::ZoomyMotorContoller()
@@ -101,28 +100,28 @@ void ZoomyMotorContoller::stepCam(boolean direction,int speed)
     this->controlEndStop();
     if (!direction && this->_camAllowedBackward)
     {
-    if (speed < motorStepperStepDelayMicroSecons)
-        speed = motorStepperStepDelayMicroSecons;
-    if (speed > this->_currentSpeed)
-    {
-        int targetSpeed = speed;
-        speed = this->_currentSpeed +((targetSpeed-this->_currentSpeed) * ControlerMotorMultiplikisenfaktor);
-       this->_ptrStepperCam->step(direction,speed);
-       this->_currentSpeed  = speed;
-    }
-    if (speed < this->_currentSpeed)
-    {
-        int targetSpeed = speed;
-        speed = this->_currentSpeed -((this->_currentSpeed-targetSpeed) * ControlerMotorMultiplikisenfaktor);
-       this->_ptrStepperCam->step(direction,speed);
-       this->_currentSpeed  = speed;
-    }
-    if (speed == this->_currentSpeed)
-    {
+        if (speed < motorStepperStepDelayMicroSecons)
+            speed = motorStepperStepDelayMicroSecons;
+        if (speed > this->_currentSpeed)
+        {
+            int targetSpeed = speed;
+            speed = this->_currentSpeed +((targetSpeed-this->_currentSpeed) * ControlerMotorMultiplikisenfaktor);
         this->_ptrStepperCam->step(direction,speed);
         this->_currentSpeed  = speed;
+        }
+        if (speed < this->_currentSpeed)
+        {
+            int targetSpeed = speed;
+            speed = this->_currentSpeed -((this->_currentSpeed-targetSpeed) * ControlerMotorMultiplikisenfaktor);
+        this->_ptrStepperCam->step(direction,speed);
+        this->_currentSpeed  = speed;
+        }
+        if (speed == this->_currentSpeed)
+        {
+            this->_ptrStepperCam->step(direction,speed);
+            this->_currentSpeed  = speed;
 
-    }
+        }
 
     }
     if (direction && this->_camAllowedForward)

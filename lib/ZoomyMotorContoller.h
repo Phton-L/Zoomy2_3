@@ -31,7 +31,6 @@ class ZoomyMotorContoller
         boolean _camDirection;
         boolean _barlowDirection;
         int _currentSpeed;
-    public:
     
     public:
         ZoomyMotorContoller();
