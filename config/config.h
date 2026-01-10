@@ -11,9 +11,9 @@ date: 26.10.2025
 #define motorCamDirection true
 #define ControlerMotorMultiplikisenfaktor 0.5
 
-#define motorStepperStepDelayMicroSeconsMax 500
+#define motorStepperStepDelayMicroSeconsMax 700
 
-#define accelerationSteps 200 // Wie viele Schritte dauert die Beschleunigung?
+#define accelerationSteps 620 // Wie viele Schritte dauert die Beschleunigung?
 // eine umdrehung 3200 steps
 
 #define endStopPullup true

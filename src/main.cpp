@@ -54,7 +54,6 @@ if (Serial.available() > 0) {
       switch (command)
       {
         case 97:
-          Serial.println("Action 1 triggered");
           ZoomyController.driveCam(speedStandart,true);
           /*
           for (size_t i = 0; i < speedStandart; i++) 
@@ -62,7 +61,7 @@ if (Serial.available() > 0) {
             //StepperCam.step(true);
             ZoomyController.stepCam(true,motorStepperStepDelayMicroSecons);           
           }
-          /* code */
+           code */
 
           break;
         case 100:
@@ -77,7 +76,6 @@ if (Serial.available() > 0) {
 
           break;
         case 119:
-          Serial.println("Action 3 triggered");
           /*
           for (size_t i = 0; i < speedStandart; i++) 
           {            
@@ -87,7 +85,6 @@ if (Serial.available() > 0) {
           ZoomyController.driveBarlow(speedStandart,true);
           break;
         case 115:
-          Serial.println("Action 4 triggered");
           /*
           for (size_t i = 0; i < speedStandart; i++) 
           {            
@@ -119,6 +116,22 @@ if (Serial.available() > 0) {
         case 54:
           Serial.println("Action 6 triggered 533");
           speedStandart = 3200/6;
+          break;
+        case 55:
+          Serial.println("Action 7 triggered 457");
+          speedStandart = 3200/7;
+          break;
+        case 56:
+          Serial.println("Action 8 triggered 400");
+          speedStandart = 3200/8;
+          break;
+        case 57:
+          Serial.println("Action 9 triggered 355");
+          speedStandart = 3200/9;
+          break;
+        case 48:
+          Serial.println("Action 10 triggered 320");
+          speedStandart = 3200/10;
           break;
         default:
           break;
