@@ -57,7 +57,7 @@ unsigned long MotorStepper::getPosition()
 void MotorStepper::step(boolean direction,int speed)
 {
     digitalWrite(this->_pinDir, (this->_direction == direction)); // bei true nach ausen fahren bei false in die mitte
-    while (millis()<lastTime + speed)
+    while (millis() -speed >= lastTime )
     {
         delayMicroseconds(1);
     }

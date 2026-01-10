@@ -33,7 +33,7 @@ void setup() {
 
   SoomyContoller.begin(motorCamDirection,motorBarlowDirection,&EndStoppMiddle,&EndStoppCam,&EndStoppBarlow,&StepperCam, &StepperBarlow);
   Serial.println("calibracen");
-  SoomyContoller.calibration();
+  //SoomyContoller.calibration();
   
 }
 

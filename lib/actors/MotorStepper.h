@@ -37,7 +37,7 @@ public:
     unsigned long getPosition();
 
     //Usage
-    void step(boolean direction);
+    void step(boolean direction,int speed);
 };
 
 #endif
