@@ -3,7 +3,7 @@
 #include "../pins/pinsMain.h"
 #include "../lib/actors/MotorStepper.h"
 #include "../lib/sensor/EndStop.h"
-#include "../lib/zoomyMotorContoller.h"
+#include "../lib/ZoomyMotorController.h"
 
 long motorBarlowPositionReal = 0L;
 long motorBarlowPositionTarget = 0L;
@@ -16,11 +16,11 @@ MotorStepper StepperBarlow = MotorStepper();
 
 
 // EndStop
-EndStop EndStoppCam = Endstop();
-EndStop EndStoppBarlow = Endstop();
-EndStop EndStoppMiddle = Endstop();
+EndStop EndStoppCam = EndStop();
+EndStop EndStoppBarlow = EndStop();
+EndStop EndStoppMiddle = EndStop();
 //
-SoomyMotorContoller SoomyContoller = SoomyMotorContoller();
+ZoomyMotorController ZoomyController = ZoomyMotorController();
 
 void setup() {
   Serial.begin(9600);
@@ -31,9 +31,9 @@ void setup() {
   EndStoppCam.begin(pinEndStopCam, endStopInvert, endStopPullup);
   EndStoppMiddle.begin(pinEndStopMiddel, endStopInvert, endStopPullup);
 
-  SoomyContoller.begin(motorCamDirection,motorBarlowDirection,&EndStoppMiddle,&EndStoppCam,&EndStoppBarlow,&StepperCam, &StepperBarlow);
+  ZoomyController.begin(motorCamDirection,motorBarlowDirection,&EndStoppMiddle,&EndStoppCam,&EndStoppBarlow,&StepperCam, &StepperBarlow);
   Serial.println("calibracen");
-  //SoomyContoller.calibration();
+  //ZoomyController.calibration();
   
 }
 
@@ -57,27 +57,30 @@ if (Serial.available() > 0) {
           for (size_t i = 0; i < speedStandart; i++) 
           {
             //StepperCam.step(true);
-            SoomyController.stepCam(true,motorStepperStepDelayMicroSecons);           
+            ZoomyController.stepCam(true,motorStepperStepDelayMicroSecons);           
           }
           /* code */
           break;
         case 100:           
-            SoomyController.stepCam(false,motorStepperStepDelayMicroSecons);
-            lastInput = 100;
+            for (size_t i = 0; i < speedStandart; i++) 
+          {
+            //StepperCam.step(true);
+            ZoomyController.stepCam(false,motorStepperStepDelayMicroSecons);           
+          }
 
           break;
         case 119:
           Serial.println("Action 3 triggered");
           for (size_t i = 0; i < speedStandart; i++) 
           {            
-            SoomyController.stepBarlow(true,motorStepperStepDelayMicroSecons);          
+            ZoomyController.stepBarlow(true,motorStepperStepDelayMicroSecons);          
           }
           break;
         case 115:
           Serial.println("Action 4 triggered");
           for (size_t i = 0; i < speedStandart; i++) 
           {            
-            SoomyController.stepBarlow(false,motorStepperStepDelayMicroSecons);            
+            ZoomyController.stepBarlow(false,motorStepperStepDelayMicroSecons);            
           }
           break;
         case 49:
@@ -108,9 +111,9 @@ if (Serial.available() > 0) {
           switch (lastInput)
           {
           case 100:
-            while (SoomyController.currentSpeedReturn() > 0)
+            while (ZoomyController.currentSpeedReturn() > 0)
             {
-              SoomyController.stepCam(false,0);
+              ZoomyController.stepCam(false,0);
             }
             break;
           

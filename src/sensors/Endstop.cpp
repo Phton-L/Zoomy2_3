@@ -21,7 +21,7 @@ void EndStop::begin(byte pin, boolean invert, boolean pullUp)
     this->_pin = pin;
     this->_invert = invert;
 
-    if(pullup)
+    if(pullUp)
     {
         pinMode(this->_pin, INPUT_PULLUP);
     }

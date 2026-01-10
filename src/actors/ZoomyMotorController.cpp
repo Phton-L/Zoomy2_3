@@ -21,7 +21,7 @@ ZoomyMotorController::ZoomyMotorController()
 
     this->_camDirection = true;
     this->_barlowDirection = true;
-    this->_currentSpeed = 0;
+    this->_currentSpeed = 1000;
 }
 
 void ZoomyMotorController::begin(
@@ -98,33 +98,9 @@ void ZoomyMotorController::calibration()
 void ZoomyMotorController::stepCam(boolean direction,int speed)
 {   
     this->controlEndStop();
-    if (!direction && this->_camAllowedBackward)
-    {
-        if (speed < motorStepperStepDelayMicroSecons)
-            speed = motorStepperStepDelayMicroSecons;
-        if (speed > this->_currentSpeed)
-        {
-            int targetSpeed = speed;
-            speed = this->_currentSpeed +((targetSpeed-this->_currentSpeed) * ControlerMotorMultiplikisenfaktor);
-        this->_ptrStepperCam->step(direction,speed);
-        this->_currentSpeed  = speed;
-        }
-        if (speed < this->_currentSpeed)
-        {
-            int targetSpeed = speed;
-            speed = this->_currentSpeed -((this->_currentSpeed-targetSpeed) * ControlerMotorMultiplikisenfaktor);
-        this->_ptrStepperCam->step(direction,speed);
-        this->_currentSpeed  = speed;
-        }
-        if (speed == this->_currentSpeed)
-        {
-            this->_ptrStepperCam->step(direction,speed);
-            this->_currentSpeed  = speed;
-
-        }
-
-    }
-    if (direction && this->_camAllowedForward)
+    if (direction && this->_BarlowAllowedForward)
+       this->_ptrStepperCam->step(direction,speed);
+    if (!direction && this->_BarlowAllowedBackward)
         this->_ptrStepperCam->step(direction,speed);
 }
 void ZoomyMotorController::stepBarlow(boolean direction,int speed)

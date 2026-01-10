@@ -52,7 +52,7 @@ class ZoomyMotorController
 
         void stepBarlow(boolean direction,int speed);
 
-        int currentSpeedReturn()
+        int currentSpeedReturn();
 
 };
 #endif
