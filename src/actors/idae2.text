@@ -1,0 +1,95 @@
+// Pins für den Treiber
+const int STEP_PIN = 2;
+const int DIR_PIN = 3;
+
+class SimpleAccelStepper {
+  private:
+    int stepPin, dirPin;
+    long targetPosition = 0;
+    long currentPosition = 0;
+    
+    unsigned long lastStepTime = 0;
+    unsigned long currentInterval = 2000; // Start-Intervall (langsam)
+    
+    const unsigned long maxInterval = 2000; // Langsamste Fahrt (Start/Stopp)
+    const unsigned long minInterval = 500;  // Schnellste Fahrt
+    const int accelSteps = 200;             // Schritte für Beschleunigung/Bremsung
+
+  public:
+    SimpleAccelStepper(int sPin, int dPin) {
+      stepPin = sPin;
+      dirPin = dPin;
+      pinMode(stepPin, OUTPUT);
+      pinMode(dirPin, OUTPUT);
+    }
+
+    void moveTo(long target) {
+      targetPosition = target;
+    }
+
+    void update() {
+      if (currentPosition == targetPosition) return;
+
+      unsigned long now = micros();
+      
+      // Prüfen, ob es Zeit für den nächsten Schritt ist
+      if (now - lastStepTime >= currentInterval) {
+        lastStepTime = now;
+
+        // Richtung setzen
+        if (targetPosition > currentPosition) {
+          digitalWrite(dirPin, HIGH);
+          currentPosition++;
+        } else {
+          digitalWrite(dirPin, LOW);
+          currentPosition--;
+        }
+
+        // Schritt-Impuls
+        digitalWrite(stepPin, HIGH);
+        delayMicroseconds(5); // Extrem kurzer Impuls für den Treiber
+        digitalWrite(stepPin, LOW);
+
+        // LOGIK FÜR BESCHLEUNIGUNG & BREMSUNG
+        long distanceToGo = abs(targetPosition - currentPosition);
+        long stepsDone = abs(currentPosition - (targetPosition > currentPosition ? targetPosition - 1000 : 0)); // Vereinfacht für Demo
+
+        // 1. Beschleunigen (Intervall verkleinern)
+        // Wir zählen, wie weit wir vom Start oder Ziel weg sind
+        long distanceFromStart = abs(currentPosition - (targetPosition - (targetPosition - currentPosition + stepsDone))); 
+        
+        // Einfachere Logik:
+        if (distanceToGo < accelSteps) {
+          // Bremsen: Intervall vergrößern
+          currentInterval = map(distanceToGo, 0, accelSteps, maxInterval, minInterval);
+        } else {
+          // Beschleunigen oder Max Speed
+          // Wir schätzen die Beschleunigung basierend auf den bereits getätigten Schritten (hier vereinfacht)
+          // In einer echten Lib würde man eine Startposition speichern.
+          currentInterval = minInterval; // Hier setzen wir auf Max-Speed, wenn nicht gebremst wird
+        }
+      }
+    }
+
+    bool isRunning() {
+      return currentPosition != targetPosition;
+    }
+};
+
+// Instanz erstellen
+SimpleAccelStepper myStepper(STEP_PIN, DIR_PIN);
+
+void setup() {
+  Serial.begin(115200);
+  myStepper.moveTo(2000); // Ziel: 2000 Schritte
+}
+
+void loop() {
+  // Der Motor wird hier "nebenbei" aktualisiert
+  myStepper.update();
+
+  // Hier kannst du andere Dinge tun, z.B. Serial-Output oder Sensoren
+  if (millis() % 500 == 0) {
+    // Serial.println("Arduino arbeitet weiter...");
+  }
+}
