@@ -71,5 +71,31 @@ void MotorStepper::step(boolean direction,int speed)
         this->_position--;
     }
 }
+void MotorStepper::drive(int steps,bool foreard)
+{
+    digitalWrite(this->_pinDir, (this->_direction == foreard)); // bei true nach ausen fahren bei false in die mitte
+    int currentDelay = motorStepperStepDelayMicroSeconsMax;
+    int delayStep =(motorStepperStepDelayMicroSeconsMax -motorStepperStepDelayMicroSecons) / accelerationSteps;
+
+    for(int i=0; i< steps; i++)
+    {
+        
+    digitalWrite(this->_pinStp, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(this->_pinStp, LOW);
+    delayMicroseconds(currentDelay);
+
+    if (i < accelerationSteps) {
+      currentDelay -= delayStep;
+    }
+    // 2. Bremsphase (Am Ende)
+    else if (i > (steps - accelerationSteps)) {
+      currentDelay += delayStep;
+    }
+    
+    // Sicherheit: Delay nicht unter minDelay fallen lassen
+    if (currentDelay < motorStepperStepDelayMicroSecons) currentDelay = motorStepperStepDelayMicroSecons;
+    }
+}
 
 #endif

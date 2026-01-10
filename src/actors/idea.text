@@ -1,0 +1,50 @@
+// Pins für A4988 / DRV8825 Treiber
+const int stepPin = 2;
+const int dirPin = 3;
+
+// Einstellungen
+const int targetSteps = 1000;      // Wie weit soll er fahren?
+const int minDelay = 500;         // Kürzeste Pause (Maximalgeschwindigkeit) in Mikrosekunden
+const int maxDelay = 2000;        // Längste Pause (Startgeschwindigkeit) in Mikrosekunden
+const int accelerationSteps = 200; // Wie viele Schritte dauert die Beschleunigung?
+
+void setup() {
+  pinMode(stepPin, OUTPUT);
+  pinMode(dirPin, OUTPUT);
+}
+
+void loop() {
+  moveStepper(targetSteps, true); // 1000 Schritte vorwärts
+  delay(1000);                    // Pause
+  moveStepper(targetSteps, false); // 1000 Schritte rückwärts
+  delay(1000);
+}
+
+void moveStepper(int steps, bool forward) {
+  digitalWrite(dirPin, forward ? HIGH : LOW);
+
+  int currentDelay = maxDelay;
+  
+  // Berechnung der Beschleunigung pro Schritt
+  int delayStep = (maxDelay - minDelay) / accelerationSteps;
+
+  for (int i = 0; i < steps; i++) {
+    // Schritt ausführen
+    digitalWrite(stepPin, HIGH);
+    delayMicroseconds(10); // Kurzer Impuls
+    digitalWrite(stepPin, LOW);
+    delayMicroseconds(currentDelay);
+
+    // 1. Beschleunigungsphase (Am Anfang)
+    if (i < accelerationSteps) {
+      currentDelay -= delayStep;
+    }
+    // 2. Bremsphase (Am Ende)
+    else if (i > (steps - accelerationSteps)) {
+      currentDelay += delayStep;
+    }
+    
+    // Sicherheit: Delay nicht unter minDelay fallen lassen
+    if (currentDelay < minDelay) currentDelay = minDelay;
+  }
+}

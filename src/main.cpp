@@ -35,6 +35,7 @@ void setup() {
   Serial.println("calibracen");
   //ZoomyController.calibration();
   
+  
 }
 
 void loop() {
@@ -54,34 +55,46 @@ if (Serial.available() > 0) {
       {
         case 97:
           Serial.println("Action 1 triggered");
+          ZoomyController.driveCam(speedStandart,true);
+          /*
           for (size_t i = 0; i < speedStandart; i++) 
           {
             //StepperCam.step(true);
             ZoomyController.stepCam(true,motorStepperStepDelayMicroSecons);           
           }
           /* code */
+
           break;
-        case 100:           
+        case 100:
+          /*
             for (size_t i = 0; i < speedStandart; i++) 
           {
             //StepperCam.step(true);
             ZoomyController.stepCam(false,motorStepperStepDelayMicroSecons);           
           }
+            */
+          ZoomyController.driveCam(speedStandart,false);
 
           break;
         case 119:
           Serial.println("Action 3 triggered");
+          /*
           for (size_t i = 0; i < speedStandart; i++) 
           {            
             ZoomyController.stepBarlow(true,motorStepperStepDelayMicroSecons);          
           }
+            */
+          ZoomyController.driveBarlow(speedStandart,true);
           break;
         case 115:
           Serial.println("Action 4 triggered");
+          /*
           for (size_t i = 0; i < speedStandart; i++) 
           {            
             ZoomyController.stepBarlow(false,motorStepperStepDelayMicroSecons);            
           }
+            */
+           ZoomyController.driveBarlow(speedStandart,false);
           break;
         case 49:
           Serial.println("Action 1 triggered 3200");
@@ -108,18 +121,6 @@ if (Serial.available() > 0) {
           speedStandart = 3200/6;
           break;
         default:
-          switch (lastInput)
-          {
-          case 100:
-            while (ZoomyController.currentSpeedReturn() > 0)
-            {
-              ZoomyController.stepCam(false,0);
-            }
-            break;
-          
-          default:
-            break;
-          }
           break;
       }
     while (Serial.available())

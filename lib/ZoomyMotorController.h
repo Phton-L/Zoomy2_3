@@ -54,5 +54,10 @@ class ZoomyMotorController
 
         int currentSpeedReturn();
 
+        void driveCam(int steps,boolean direction);
+
+        void driveBarlow(int steps,boolean direction);
+
+
 };
 #endif

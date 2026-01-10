@@ -115,6 +115,22 @@ int ZoomyMotorController::currentSpeedReturn()
 {
     return this->_currentSpeed;
 }
+void ZoomyMotorController::driveCam(int steps,boolean direction)
+{   
+    this->controlEndStop();
+    if (direction && this->_BarlowAllowedForward)
+       this->_ptrStepperCam->drive(steps,direction);
+    if (!direction && this->_BarlowAllowedBackward)
+        this->_ptrStepperCam->drive(steps,direction);
+}
+void ZoomyMotorController::driveBarlow(int steps,boolean direction)
+{   
+    this->controlEndStop();
+    if (direction && this->_BarlowAllowedForward)
+       this->_ptrStepperBarlow->drive(steps,direction);
+    if (!direction && this->_BarlowAllowedBackward)
+        this->_ptrStepperBarlow->drive(steps,direction);
+}
 /*
 void ZoomyMotorController::stepCam(boolean direction,int speed)
 {   

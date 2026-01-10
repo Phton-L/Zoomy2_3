@@ -38,6 +38,8 @@ public:
 
     //Usage
     void step(boolean direction,int speed);
+
+    void drive(int steps,bool forword);
 };
 
 #endif
