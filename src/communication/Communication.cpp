@@ -2,7 +2,7 @@
 created by: Vinzent Schillinger
 date: 19.12.2015
 */
-
+test test test
 #ifndef COMMUNICATION_CPP
 #define COMMUNICATION_CPP
 
