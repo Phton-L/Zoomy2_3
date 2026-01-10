@@ -3,11 +3,11 @@ created by: Vinzent Schillinger
 date: 01.11.2025
 */
 
-#ifndef CONTROLER_CPP    
-#define CONTROLER_CPP
+#ifndef CONTROLLER_CPP    
+#define CONTROLLER_CPP
 
 #include <Arduino.h>
-#include "../../lib/controler/Controller.h"
+#include "../../lib/controller/Controller.h"
 
 
 Controller::Controller()

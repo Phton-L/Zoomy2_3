@@ -5,7 +5,7 @@ date: 19.12.2015
 #ifndef COMMUNICATION_CPP
 #define COMMUNICATION_CPP
 
-#include "../../lib/cominication/Communication.h"
+#include "../../lib/communication/Communication.h"
 
 Communication::Communication()
 {
