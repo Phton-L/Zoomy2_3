@@ -3,15 +3,15 @@ created by: Vinzent Schillinger
 date: 26.10.2025
 */
 
-#ifndef Zoomy_MOTOR_CONTOLLER_H
-#define Zoomy_MOTOR_CONTOLLER_H
+#ifndef Zoomy_MOTOR_Controller_H
+#define Zoomy_MOTOR_Controller_H
 
 #include <Arduino.h>
 #include "actors/MotorStepper.h"
 #include "sensor/EndStop.h"
 
 
-class ZoomyMotorContoller
+class ZoomyMotorController
 {
     private:
 
@@ -33,7 +33,7 @@ class ZoomyMotorContoller
         int _currentSpeed;
     
     public:
-        ZoomyMotorContoller();
+        ZoomyMotorController();
         void begin(
             boolean camDirection, 
             boolean barlowDirection, 
