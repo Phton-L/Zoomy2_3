@@ -2,7 +2,7 @@
 created by: Vinzent Schillinger
 date: 19.12.2015
 */
-
+//well this is a thing now and i dont know why so lets test a bit of text
 #ifndef COMMUNICATION_CPP
 #define COMMUNICATION_CPP
 
