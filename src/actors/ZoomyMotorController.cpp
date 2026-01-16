@@ -67,29 +67,29 @@ void ZoomyMotorController::calibration()
         Serial.print(!this->_ptrEndStopBarlow->getState());
         Serial.println("EndStopBarlow");
         while (!this->_ptrEndStopBarlow->getState())
-            this->_ptrStepperBarlow->step(false,motorStepperStepDelayMicroSecons); // bei true nach ausen fahren
+            this->_ptrStepperBarlow->step(false,motorStepperStepDelayMicroSeconds); // bei true nach ausen fahren
         while(!this->_ptrEndStopCam->getState())
-            this->_ptrStepperCam->step(false,motorStepperStepDelayMicroSecons);
+            this->_ptrStepperCam->step(false,motorStepperStepDelayMicroSeconds);
     }
     while (this->_ptrEndStopBarlow->getState() || this->_ptrEndStopCam->getState())
     {   
         while (this->_ptrEndStopBarlow->getState())
-            this->_ptrStepperBarlow->step(true,motorStepperStepDelayMicroSecons); // bei false in die mitte fahren
+            this->_ptrStepperBarlow->step(true,motorStepperStepDelayMicroSeconds); // bei false in die mitte fahren
         while (this->_ptrEndStopCam->getState())
-            this->_ptrStepperCam->step(true,motorStepperStepDelayMicroSecons);
+            this->_ptrStepperCam->step(true,motorStepperStepDelayMicroSeconds);
     }
     while (!this->_ptrEndStopBarlow->getState() || !this->_ptrEndStopCam->getState())
     {
         while (!this->_ptrEndStopBarlow->getState())
         {
-            delayMicroseconds(motorStepperStepDelayMicroSecons);
-            this->_ptrStepperBarlow->step(false,motorStepperStepDelayMicroSecons); // bei true nach ausen fahren
+            delayMicroseconds(motorStepperStepDelayMicroSeconds);
+            this->_ptrStepperBarlow->step(false,motorStepperStepDelayMicroSeconds); // bei true nach ausen fahren
         }
         
         while (!this->_ptrEndStopCam->getState())
         {
-            delayMicroseconds(motorStepperStepDelayMicroSecons);
-            this->_ptrStepperCam->step(false,motorStepperStepDelayMicroSecons);
+            delayMicroseconds(motorStepperStepDelayMicroSeconds);
+            this->_ptrStepperCam->step(false,motorStepperStepDelayMicroSeconds);
         }
     }
     this->_ptrStepperBarlow->setPosition(0);

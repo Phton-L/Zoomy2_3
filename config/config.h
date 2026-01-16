@@ -7,11 +7,11 @@ date: 26.10.2025
 #define CONFIG_H
 
 #define motorBarlowDirection false
-#define motorStepperStepDelayMicroSecons 80
+#define motorStepperStepDelayMicroSeconds 80
 #define motorCamDirection true
-#define ControlerMotorMultiplikisenfaktor 0.5
+#define ControllerMotorMultiplikationsfakto 0.5
 
-#define motorStepperStepDelayMicroSeconsMax 700
+#define motorStepperStepDelayMicroSecondsMax 700
 
 #define accelerationSteps 620 // Wie viele Schritte dauert die Beschleunigung?
 // eine umdrehung 3200 steps

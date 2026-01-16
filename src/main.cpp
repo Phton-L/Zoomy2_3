@@ -59,7 +59,7 @@ if (Serial.available() > 0) {
           for (size_t i = 0; i < speedStandart; i++) 
           {
             //StepperCam.step(true);
-            ZoomyController.stepCam(true,motorStepperStepDelayMicroSecons);           
+            ZoomyController.stepCam(true,motorStepperStepDelayMicroSeconds);           
           }
            code */
 
@@ -69,7 +69,7 @@ if (Serial.available() > 0) {
             for (size_t i = 0; i < speedStandart; i++) 
           {
             //StepperCam.step(true);
-            ZoomyController.stepCam(false,motorStepperStepDelayMicroSecons);           
+            ZoomyController.stepCam(false,motorStepperStepDelayMicroSeconds);           
           }
             */
           ZoomyController.driveCam(speedStandart,false);
@@ -79,7 +79,7 @@ if (Serial.available() > 0) {
           /*
           for (size_t i = 0; i < speedStandart; i++) 
           {            
-            ZoomyController.stepBarlow(true,motorStepperStepDelayMicroSecons);          
+            ZoomyController.stepBarlow(true,motorStepperStepDelayMicroSeconds);          
           }
             */
           ZoomyController.driveBarlow(speedStandart,true);
@@ -88,7 +88,7 @@ if (Serial.available() > 0) {
           /*
           for (size_t i = 0; i < speedStandart; i++) 
           {            
-            ZoomyController.stepBarlow(false,motorStepperStepDelayMicroSecons);            
+            ZoomyController.stepBarlow(false,motorStepperStepDelayMicroSeconds);            
           }
             */
            ZoomyController.driveBarlow(speedStandart,false);
