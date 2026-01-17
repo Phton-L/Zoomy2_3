@@ -22,11 +22,11 @@ void Controller::begin(MotorStepper* controllerMotor,
     this->_controllerMotor = controllerMotor;
     this->_controllerEndSopEnd = controllerEndSopEnd;
     this->_controllerEndStopMiddel = controllerEndStopMiddel;
-    _MultiplicationFactor = MultiplicationFactor;
+    this->_controllerMultiplicationFactorSteps = MultiplicationFactor;
 }
 long Controller::getDistanceMM()
 {
-    _distanceMM = this->_controllerMotor->getPosition()*_MultiplicationFactor;
+    _distanceMM = this->_controllerMotor->getPosition()*_controllerMultiplicationFactorSteps;
     return _distanceMM;
 }
 
