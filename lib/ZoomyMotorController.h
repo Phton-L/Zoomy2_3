@@ -58,6 +58,8 @@ class ZoomyMotorController
 
         void driveBarlow(int steps,boolean direction);
 
+        void ubDateCam();
+
 
 };
 #endif

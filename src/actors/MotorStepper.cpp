@@ -71,9 +71,9 @@ void MotorStepper::step(boolean direction,int speed)
         this->_position--;
     }
 }
-void MotorStepper::drive(int steps,bool foreard)
+void MotorStepper::drive(int steps,bool forward)
 {
-    digitalWrite(this->_pinDir, (this->_direction == foreard)); // bei true nach ausen fahren bei false in die mitte
+    digitalWrite(this->_pinDir, (this->_direction == forward)); // bei true nach ausen fahren bei false in die mitte
     int currentDelay = motorStepperStepDelayMicroSecondsMax;
     int delayStep =(motorStepperStepDelayMicroSecondsMax -motorStepperStepDelayMicroSeconds) / accelerationSteps;
 
