@@ -16,17 +16,17 @@ Controller::Controller()
 void Controller::begin(MotorStepper* controllerMotor,
                 EndStop* controllerEndSopEnd,
                 EndStop* controllerEndStopMiddel,
-                int controllerMultiplicatorSteps
+                int MultiplicationFactor
                 )
 {
     this->_controllerMotor = controllerMotor;
     this->_controllerEndSopEnd = controllerEndSopEnd;
     this->_controllerEndStopMiddel = controllerEndStopMiddel;
-    _controllerMultiplicatorSteps = controllerMultiplicatorSteps;
+    _MultiplicationFactor = MultiplicationFactor;
 }
 long Controller::getDistanceMM()
 {
-    _distanceMM = this->_controllerMotor->getPosition()*_controllerMultiplicatorSteps;
+    _distanceMM = this->_controllerMotor->getPosition()*_MultiplicationFactor;
     return _distanceMM;
 }
 

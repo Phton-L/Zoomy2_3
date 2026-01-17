@@ -3,8 +3,8 @@ created by: Vinzent Schillinger
 date: 01.11.2025
 */
 
-#ifndef CONTROLER_H    
-#define CONTROLER_H
+#ifndef CONTROLLER_H    
+#define CONTROLLER_H
 
 #include <Arduino.h>
 #include "../../lib/actors/MotorStepper.h"
@@ -16,7 +16,7 @@ class Controller
         EndStop* _controllerEndSopEnd;
         EndStop* _controllerEndStopMiddel;
 
-        int _controllerMultiplicatorSteps;
+        int _controllerMultiplicationFactorSteps;
 
         long _distanceMM;
 
@@ -27,7 +27,7 @@ class Controller
     void begin(MotorStepper* controllerMotor,
                 EndStop* controllerEndSopEnd,
                 EndStop* controllerEndStopMiddel,
-                int controllerMultiplicatorSteps
+                int MultiplicationFactor
                 );
     
     long getDistanceMM();

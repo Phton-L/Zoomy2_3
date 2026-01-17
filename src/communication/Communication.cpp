@@ -33,19 +33,7 @@ void Communication::begin(byte start,byte end,int bout,boolean serial1Bol)
 
 
 void Communication::read(int &directionSend,int &speedSend)
-{/*
-   if(_serial1Bol)
-    {
-        if(Serial1.available())
-        {
-            if( Serial1.readBytes() == _start)
-            {
-                //byte fistInformazion = Serial1.readBytes();
-                //byte secendInformaion = Serial1.readBytes();
-            } 
-        }
-    }
-        */ 
+{
 }
 void Communication::send(int directionSend,int speedSend)
 {

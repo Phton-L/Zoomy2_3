@@ -6,9 +6,7 @@ date: 12.03.2024
 #ifndef ENDSTOP_H
 #define ENDSTOP_H
 
-/*
-Include nessecary libraries
-*/
+
 #include <Arduino.h>
 
 class EndStop
